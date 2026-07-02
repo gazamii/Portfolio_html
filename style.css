@@ -96,6 +96,12 @@ body {
 .btn--ghost:hover { border-color: var(--honey); color: var(--honey); }
 .btn--dark { background: var(--text); color: #fff; }
 .btn--dark:hover { transform: translateY(-3px); }
+.btn--honey {
+  background: var(--honey);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(232, 176, 75, 0.35);
+}
+.btn--honey:hover { transform: translateY(-3px); }
 
 /* ============================================================
    NAV
@@ -323,10 +329,51 @@ body {
 .tag--coral { background: #FFF0E8; color: var(--coral); }
 .tag--honey { background: #FBF0D9; color: #C68A1E; }
 
-.features { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 14px; }
+.features { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .features li { display: flex; gap: 12px; align-items: flex-start; }
 .features__mark { flex-shrink: 0; color: var(--honey); font-weight: 800; }
 .features p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text); }
+
+/* ---------- 프로젝트 액션 버튼 ---------- */
+.project__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.project__toggle-arrow { display: inline-flex; transition: transform 0.3s ease; }
+.project__toggle[aria-expanded="true"] .project__toggle-arrow { transform: rotate(180deg); }
+
+/* ---------- 프로젝트 확장 상세 영역 ---------- */
+.project__detail {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease;
+}
+.project__detail.open { max-height: 4000px; opacity: 1; }
+.project__detail-inner {
+  padding-top: 32px;
+  margin-top: 28px;
+  border-top: 1px solid rgba(61, 53, 46, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 40px);
+}
+.project__video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.project__video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.project__info { display: grid; gap: 26px; align-content: start; }
+.project__info-block .tags { margin: 0; }
+.project__info-block .features { margin: 0; }
+.project__info-text { margin: 0; font-size: 15px; line-height: 1.75; color: var(--text-soft); }
 
 /* ---------- 아코디언 ---------- */
 .accordion__btn {
@@ -422,6 +469,7 @@ body {
   .hero { grid-template-columns: 1fr; }
   .hero__art { max-width: 360px; margin: 0 auto; width: 100%; }
   .about__grid { grid-template-columns: 1fr; }
+  .project__detail-inner { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
