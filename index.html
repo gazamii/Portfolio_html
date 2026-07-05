@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OOO · Portfolio</title>
+  <title>김가빈 · Portfolio</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -13,7 +13,7 @@
   <nav class="nav">
     <a href="#home" class="nav__logo">
       <span class="nav__logo-badge">O</span>
-      OOO.dev
+      김가빈.dev
     </a>
     <div class="nav__menu">
       <a href="#about" class="nav__link">About</a>
@@ -270,6 +270,97 @@
                   <span class="tag tag--honey">OSMnx</span>
                   <span class="tag tag--honey">Leaflet.js</span>
                   <span class="tag tag--honey">OpenAI API</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="card project">
+        <h3 class="project__title">🧡 지금 보고 계신 이 포트폴리오</h3>
+        <p class="project__desc">
+          프레임워크 없이 바닐라 HTML/CSS/JS만으로 처음부터 직접 설계하고 구현한 개인 포트폴리오 웹사이트
+          <span class="muted">(웜톤 디자인 시스템 · 확장형 카드 UI)</span>
+        </p>
+        <div class="tags">
+          <span class="tag tag--coral">HTML5</span>
+          <span class="tag tag--coral">CSS3</span>
+          <span class="tag tag--coral">JavaScript</span>
+          <span class="tag tag--coral">Git</span>
+        </div>
+
+        <div class="project__actions">
+          <button type="button" class="btn btn--primary project__toggle" aria-expanded="false">
+            <span class="project__toggle-label">자세히 보기</span>
+            <span class="project__toggle-arrow" aria-hidden="true">▾</span>
+          </button>
+          <a href="https://github.com/gazamii/Portfolio_html" target="_blank" rel="noopener" class="btn btn--ghost">🐙 GitHub</a>
+          <a href="https://www.youtube.com/watch?v=m6sPiPqWeVo" target="_blank" rel="noopener" class="btn btn--honey">▶ 시연영상</a>
+        </div>
+
+        <div class="project__detail">
+          <div class="project__detail-inner">
+            <div class="project__video">
+              <iframe
+                src="https://www.youtube.com/embed/m6sPiPqWeVo"
+                title="포트폴리오 웹사이트 시연영상"
+                loading="lazy"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <div class="project__info">
+              <div class="project__info-block">
+                <p class="eyebrow">프로젝트 개요</p>
+                <p class="project__info-text">
+                  지금 보고 계신 이 포트폴리오 웹사이트 자체가 하나의 프로젝트입니다. React나 Vue 같은
+                  프레임워크 없이 순수 HTML/CSS/JS만으로 웜톤 컬러 시스템, 아코디언, 확장형 카드 등의
+                  인터랙션을 직접 설계하고 구현했습니다. 컴포넌트 없이도 유지보수 가능한 구조를 만들기
+                  위해 BEM 네이밍 규칙과 CSS 변수 기반 디자인 시스템을 일관되게 적용했습니다.
+                </p>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">핵심 기능 &amp; 로직</p>
+                <ul class="features">
+                  <li><span class="features__mark">✦</span><p><strong>CSS 변수 기반 디자인 시스템</strong> — --coral, --honey 등 변수 하나로 전체 톤앤매너를 일괄 관리해 확장·수정 용이성 확보</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>확장형(Expanding) 프로젝트 카드</strong> — 팝업 없이 카드 자체가 그 자리에서 펼쳐지는 max-height/opacity 트랜지션과, 한 번에 하나만 열리도록 제어하는 아코디언 그룹 로직 구현</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>반응형 그리드 레이아웃</strong> — Hero/About/Projects 각 섹션을 CSS Grid와 clamp()로 구성해 데스크톱부터 모바일까지 최소한의 미디어쿼리로 대응</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>부드러운 스크롤 내비게이션</strong> — 고정 헤더 높이를 보정한 커스텀 스크롤 로직으로 앵커 이동 시 콘텐츠 잘림 방지</p></li>
+                </ul>
+              </div>
+
+              <div class="project__info-block">
+                <button class="accordion__btn" aria-expanded="false">
+                  <span>🛠️ Troubleshooting — 문제 해결 경험</span>
+                  <span class="accordion__chev accordion__chev--coral">▾</span>
+                </button>
+                <div class="accordion__panel">
+                  <div class="accordion__inner">
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">한 카드 안에 카드 전체 확장과 Troubleshooting 아코디언, 두 종류의 열고 닫힘 상태가 공존하며 로직이 얽힘</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 카드 확장 여부와 내부 아코디언 여부를 각각 독립된 aria-expanded 상태로 분리해 관리, 상호 간섭 없이 동작하도록 구현</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">실제 이미지 없이 이모지만으로 일러스트를 표현하다 보니 화면이 정적으로 느껴짐</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> absolute로 배치한 도형 요소에 keyframe 애니메이션(floaty)을 적용해 은은한 움직임을 부여, 따뜻하고 생동감 있는 느낌으로 개선</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">사용 기술 스택</p>
+                <div class="tags">
+                  <span class="tag tag--coral">HTML5</span>
+                  <span class="tag tag--coral">CSS3</span>
+                  <span class="tag tag--coral">JavaScript</span>
+                  <span class="tag tag--coral">Git</span>
                 </div>
               </div>
             </div>
