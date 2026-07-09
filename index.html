@@ -101,6 +101,98 @@
 
       <!-- Project 1 -->
       <article class="card project">
+        <h3 class="project__title">🍀 노노링크 (Nono Link)</h3>
+        <p class="project__desc">
+          어르신이 손글씨로 작성한 재능 신청서를 OCR·AI로 구조화해 QR 명함으로 만들고, 노(老)-노(老) 이웃을 안전하게 연결하는
+          <span class="muted">한·일 초고령사회 돌봄 매칭 플랫폼</span>
+        </p>
+        <div class="tags">
+          <span class="tag tag--honey">Node.js</span>
+          <span class="tag tag--honey">MySQL</span>
+          <span class="tag tag--honey">Express</span>
+          <span class="tag tag--honey">REST API</span>
+        </div>
+
+        <div class="project__actions">
+          <button type="button" class="btn btn--primary project__toggle" aria-expanded="false">
+            <span class="project__toggle-label">자세히 보기</span>
+            <span class="project__toggle-arrow" aria-hidden="true">▾</span>
+          </button>
+          <a href="https://github.com/orgs/Nono-Link/repositories" target="_blank" rel="noopener" class="btn btn--ghost">🐙 GitHub</a>
+          <a href="https://www.youtube.com/watch?v=e4aQvoMPS_4" target="_blank" rel="noopener" class="btn btn--honey">▶ 시연영상</a>
+        </div>
+
+        <div class="project__detail">
+          <div class="project__detail-inner">
+            <div class="project__video">
+              <iframe
+                src="https://www.youtube.com/embed/e4aQvoMPS_4"
+                title="노노링크 시연영상"
+                loading="lazy"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <div class="project__info">
+              <div class="project__info-block">
+                <p class="eyebrow">프로젝트 개요</p>
+                <p class="project__info-text">
+                  과학기술정보통신부 주최 '2026 글로벌 피우다프로젝트(한·일 노인돌봄 ICT 솔루션)'에서 개발한, 어르신끼리
+                  재능을 나누는 노(老)-노(老) 연결 서비스입니다. 어르신이 종이에 손글씨로 적은 재능 신청서를 OCR·AI로
+                  구조화해 QR 명함으로 만들고, 이웃이 QR을 스캔하면 개인 연락처 노출 없이 안심 매칭으로 이어집니다.
+                  저는 백엔드에서 이 서비스의 핵심인 '안심 매칭 시스템'을 맡아, 어르신 간 신뢰를 기반으로 한 매칭
+                  알고리즘과 관련 API 전반을 설계·구현했습니다. 예선 서면 평가를 통과해 본선에 진출한 프로젝트입니다.
+                </p>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">핵심 기능 &amp; 로직</p>
+                <ul class="features">
+                  <li><span class="features__mark">✦</span><p><strong>다중 요소 가중치 매칭 알고리즘</strong> — 단순 거리 기반 매칭을 넘어, 주변 사용자와의 거리·평점·이용 후기 등 여러 요소에 가중치를 부여하고 조정해 실제 상황에 맞는 신뢰 기반 매칭 결과 도출</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>MVC 구조의 매칭 모듈 설계</strong> — matchModel / matchService / matchController / matchRoutes로 계층을 분리해 매칭 기능 전반을 유지보수 가능한 구조로 구현</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>백엔드 정합성 고려한 API 설계</strong> — 매칭 API가 회원·명함 등 다른 기능과 병목 없이 연동되도록 데이터 흐름과 백엔드 구조 간 정합성 확보</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>확장 고려한 데이터 구조</strong> — 매칭 이후 실제 만남까지 이어지는 스케줄링 로직으로 자연스럽게 넘어갈 수 있도록 데이터 구조 설계</p></li>
+                </ul>
+              </div>
+
+              <div class="project__info-block">
+                <button class="accordion__btn" aria-expanded="false">
+                  <span>🛠️ Troubleshooting — 문제 해결 경험</span>
+                  <span class="accordion__chev accordion__chev--honey">▾</span>
+                </button>
+                <div class="accordion__panel">
+                  <div class="accordion__inner">
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">거리만 가까우면 매칭 순위가 높아져, 신뢰도 낮은 상대가 먼저 노출됨</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 평점·후기 데이터를 함께 가중치로 반영해 우선순위를 재조정, 신뢰할 수 있는 이웃이 먼저 연결되도록 로직 개선</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">어르신 간 매칭이라는 특성상 민감 정보(연락처·QR 식별자)가 노출될 위험</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 후기 평점 기반 노출 우선순위는 살리되, 개인 식별 정보는 화면에 드러나지 않도록 매칭 흐름을 제안-수락-완료 버튼식으로 설계</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">사용 기술 스택</p>
+                <div class="tags">
+                  <span class="tag tag--honey">Node.js</span>
+                  <span class="tag tag--honey">MySQL</span>
+                  <span class="tag tag--honey">Express</span>
+                  <span class="tag tag--honey">REST API</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="card project">
         <h3 class="project__title">🕹️ Anomaly.exe</h3>
         <p class="project__desc">
           인간이 AI인 척 연기하여 시스템을 통과하는 5단계 미션 기반의 웹 게임 구현
@@ -189,7 +281,7 @@
         </div>
       </article>
 
-      <!-- Project 2 -->
+      <!-- Project 3 -->
       <article class="card project">
         <h3 class="project__title">🗺️ 한걸음</h3>
         <p class="project__desc">
@@ -278,7 +370,7 @@
         </div>
       </article>
 
-      <!-- Project 3 -->
+      <!-- Project 4 -->
       <article class="card project">
         <h3 class="project__title">🧡 지금 보고 계신 이 포트폴리오</h3>
         <p class="project__desc">
