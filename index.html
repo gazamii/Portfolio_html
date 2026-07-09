@@ -193,15 +193,16 @@
       <article class="card project">
         <h3 class="project__title">🗺️ 한걸음</h3>
         <p class="project__desc">
-          고도 데이터와 동적 기상 정보를 융합하여 거동 약자에게 계단과 급경사를 우회하는 안전 경로를 안내하는
-          <span class="muted">AI 기반 배리어프리 복지 내비게이터</span>
+          ORS(OpenRouteService) 경로 데이터에 경사도·계단 정보를 결합해 보행 비용을 계산하고, 더 안전한 경로를 추천하는
+          <span class="muted">배리어프리 길찾기 내비게이터</span>
         </p>
         <div class="tags">
-          <span class="tag tag--honey">Python</span>
-          <span class="tag tag--honey">FastAPI</span>
-          <span class="tag tag--honey">OSMnx</span>
-          <span class="tag tag--honey">Leaflet.js</span>
-          <span class="tag tag--honey">OpenAI API</span>
+          <span class="tag tag--honey">Node.js</span>
+          <span class="tag tag--honey">Express</span>
+          <span class="tag tag--honey">ORS(OpenRouteService)</span>
+          <span class="tag tag--honey">Leaflet</span>
+          <span class="tag tag--honey">React</span>
+          <span class="tag tag--honey">Web Speech API</span>
         </div>
 
         <div class="project__actions">
@@ -209,7 +210,7 @@
             <span class="project__toggle-label">자세히 보기</span>
             <span class="project__toggle-arrow" aria-hidden="true">▾</span>
           </button>
-          <a href="https://github.com/jyunyeong843/2026_AI_MAKE" target="_blank" rel="noopener" class="btn btn--ghost">🐙 GitHub</a>
+          <a href="https://github.com/gazamii/barrier-free-navi" target="_blank" rel="noopener" class="btn btn--ghost">🐙 GitHub</a>
           <a href="https://www.youtube.com/watch?v=TcYEuwSEI2s" target="_blank" rel="noopener" class="btn btn--honey">▶ 시연영상</a>
         </div>
 
@@ -229,20 +230,19 @@
               <div class="project__info-block">
                 <p class="eyebrow">프로젝트 개요</p>
                 <p class="project__info-text">
-                  거동이 불편한 어르신과 교통약자를 위해 계단·급경사를 우회하는 안전 경로를 안내하는
-                  AI 기반 배리어프리 내비게이터입니다. 고도 데이터와 실시간 기상 정보를 결합해 경로의
-                  위험도를 동적으로 계산하고, 챗봇과 음성 안내로 접근성을 높였습니다. FastAPI 백엔드와
-                  Leaflet 기반 지도 시각화로 프론트-백엔드 연동을 리드했습니다.
+                  거동이 불편한 어르신과 교통약자를 위한 배리어프리 길찾기 서비스입니다. ORS(OpenRouteService)
+                  API로 최단 경로와 계단 회피 경로 두 가지를 받아온 뒤, 좌표별 고도값으로 구간마다 경사도(%)를
+                  직접 계산하고 계단 여부와 결합해 보행 비용을 산출합니다. 이 비용을 비교해 더 안전한 경로를
+                  추천하며, 저는 프론트엔드(React + Vite)와 백엔드(Node.js + Express) 개발을 모두 담당했습니다.
                 </p>
               </div>
 
               <div class="project__info-block">
                 <p class="eyebrow">핵심 기능 &amp; 로직</p>
                 <ul class="features">
-                  <li><span class="features__mark">✦</span><p><strong>지형 데이터 매핑</strong> — OSMnx 보행 네트워크와 OpenTopoData 표고 수치를 결합해 전 구간 경사도 산출 및 계단 위치 매핑</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>가중치 기반 다익스트라 라우팅 엔진</strong> — 강수량 등 기상 조건에 따라 계단·급경사(5~8% 초과) 구간 가중치 페널티를 동적으로 변형하는 안전 최우선 경로 탐색</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>REST API JSON 명세 수립</strong> — 우회된 계단 수·감소된 경사도 등 비교 수치 포함, 프론트-백엔드 연동 리드</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>대화형 음성 가이드</strong> — 행정 용어를 어르신 눈높이에 맞춘 OpenAI 챗봇 및 Web Speech API TTS 음성 안내</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>경사도 계산 엔진</strong> — ORS가 반환한 좌표별 고도(elevation) 데이터로 구간별 경사도(%)를 고도차 ÷ 구간거리로 서버에서 직접 산출</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>보행 비용 채점 &amp; 경로 비교</strong> — ORS에 최단 경로·계단 회피 경로를 각각 요청한 뒤, 경사도·계단 여부에 가중치를 곱해 보행 비용을 매기고 더 안전한 경로를 추천</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>음성 길안내</strong> — Web Speech API 기반 TTS로 경로 안내를 음성으로 제공해 접근성 강화</p></li>
                 </ul>
               </div>
 
@@ -255,8 +255,8 @@
                   <div class="accordion__inner">
                     <div class="trouble">
                       <p class="trouble__issue">이슈</p>
-                      <p class="trouble__text">고도 데이터와 도로망 데이터 매핑 시 연산 병목 현상</p>
-                      <p class="trouble__solve"><strong>해결 →</strong> 공간 인덱싱 최적화 알고리즘을 도입하여 다익스트라 엔진의 경로 탐색 속도 대폭 단축</p>
+                      <p class="trouble__text">(작성 예정) 실제로 겪었던 이슈를 여기에 채워주세요</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> (작성 예정) 실제 해결 과정을 여기에 채워주세요</p>
                     </div>
                   </div>
                 </div>
@@ -265,11 +265,12 @@
               <div class="project__info-block">
                 <p class="eyebrow">사용 기술 스택</p>
                 <div class="tags">
-                  <span class="tag tag--honey">Python</span>
-                  <span class="tag tag--honey">FastAPI</span>
-                  <span class="tag tag--honey">OSMnx</span>
-                  <span class="tag tag--honey">Leaflet.js</span>
-                  <span class="tag tag--honey">OpenAI API</span>
+                  <span class="tag tag--honey">Node.js</span>
+                  <span class="tag tag--honey">Express</span>
+                  <span class="tag tag--honey">ORS(OpenRouteService)</span>
+                  <span class="tag tag--honey">Leaflet</span>
+                  <span class="tag tag--honey">React</span>
+                  <span class="tag tag--honey">Web Speech API</span>
                 </div>
               </div>
             </div>
