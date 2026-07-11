@@ -218,6 +218,109 @@
 
       <!-- Project 2 -->
       <article class="card project">
+        <h3 class="project__title">💳 PAYRO</h3>
+        <span class="project-date live">
+          <span class="live-dot"></span> 2026.07.10 ~ 진행 중
+        </span>
+        <p class="project__desc">
+          멱등성과 원장 설계로 이중결제·잔액 불일치를 막은
+          <span class="muted">가상 카드 결제 시스템</span>
+        </p>
+        <span class="project-people"><span class="people-emoji">🙋‍♀️</span> 개인 프로젝트</span>
+        <div class="tags">
+          <span class="tag tag--honey">Java 17</span>
+          <span class="tag tag--honey">Spring Boot</span>
+          <span class="tag tag--honey">Spring Data JPA</span>
+          <span class="tag tag--honey">JPA</span>
+          <span class="tag tag--honey">MySQL</span>
+          <span class="tag tag--honey">Gradle</span>
+        </div>
+
+        <div class="project__actions">
+          <button type="button" class="btn btn--primary project__toggle" aria-expanded="false">
+            <span class="project__toggle-label">자세히 보기</span>
+            <span class="project__toggle-arrow" aria-hidden="true">▾</span>
+          </button>
+          <a href="https://github.com/gazamii/exactly-once-pay" target="_blank" rel="noopener" class="btn btn--ghost">🐙 GitHub</a>
+          <a href="https://youtu.be/n2gJMe8hhDM" target="_blank" rel="noopener" class="btn btn--honey">▶ 시연영상</a>
+        </div>
+
+        <div class="project__detail">
+          <div class="project__detail-inner">
+            <div class="project__video">
+              <iframe
+                src="https://www.youtube.com/embed/n2gJMe8hhDM"
+                title="PAYRO 시연영상"
+                loading="lazy"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <div class="project__info">
+              <div class="project__info-block">
+                <p class="eyebrow">프로젝트 개요</p>
+                <p class="project__info-text">
+                  카드 결제에서 같은 요청이 네트워크 재시도로 두 번 들어와도 결제가 '정확히 한 번만' 처리되도록,
+                  그리고 여러 요청이 동시에 같은 잔액을 갱신해도 정합성이 깨지지 않도록 설계한 백엔드 시스템입니다.
+                  이중결제 방지와 동시성 상황의 잔액 정합성이라는 금융 시스템의 핵심 문제 두 가지를,
+                  멱등성 키·낙관적 락·append-only 원장 설계로 풀어내고 결정적 동시성 테스트로 검증했습니다.
+                  결제 승인, 취소·부분 환불, 조회 API까지 핵심 결제 흐름이 구현되어 있습니다.
+                </p>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">핵심 기능 &amp; 로직</p>
+                <ul class="features">
+                  <li><span class="features__mark">✦</span><p><strong>멱등성 키 2단 방어</strong> — idempotencyKey 코드 검사(1차, UX·효율)와 DB unique 제약(최후 방어선)을 분리 설계해, 동시 요청이 코드 검사를 통과해도 두 번째 INSERT가 제약 위반으로 롤백되게 함</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>낙관적 락 동시성 제어</strong> — Account.version(@Version)으로 두 결제가 같은 잔액을 덮어쓰는 lost update를 감지, 충돌 트랜잭션 전체를 롤백해 '일부만 반영' 상태를 원천 차단</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>부분 취소 오버리펀드 방지</strong> — Payment에도 @Version을 두고 refundedAmount를 직접 갱신해, 동시 취소가 원 결제 금액을 초과하는 레이스를 저장 시점에 차단</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>단일 트랜잭션 원자성</strong> — '잔액 확인→차감→원장 기록→상태 변경'을 하나의 @Transactional로 묶어 부분 성공 자체가 존재하지 않게 (실패는 완전히 실패)</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>Append-only 원장 설계</strong> — LedgerEntry는 수정 없이 반대 방향 CREDIT 행을 새로 쌓아, 계좌의 자금 흐름을 시간순 그대로 복원 가능하게 (회계/카드사 원장 원칙)</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>전역 예외 처리</strong> — @RestControllerAdvice 한 곳에 에러 정책을 모으고 상태코드를 책임 소재로 분리(404/409/400/500), 스택트레이스는 로그에만 남기고 클라이언트엔 통일된 형식만 응답</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>명령·조회 책임 분리</strong> — 쓰기(pay/cancel)와 읽기(QueryService)를 클래스로 분리하고 조회엔 @Transactional(readOnly=true)를 적용해 안전성과 성능 확보</p></li>
+                </ul>
+              </div>
+
+              <div class="project__info-block">
+                <button class="accordion__btn" aria-expanded="false">
+                  <span>🛠️ Troubleshooting — 문제 해결 경험</span>
+                  <span class="accordion__chev accordion__chev--honey">▾</span>
+                </button>
+                <div class="accordion__panel">
+                  <div class="accordion__inner">
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">두 결제 요청이 거의 동시에 들어오면 둘 다 '기존 결제 없음'으로 판단해 이중결제 통과</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> idempotencyKey에 DB unique 제약을 걸어 코드 검사가 뚫려도 2차 INSERT가 롤백되게, '1차 방어=코드, 최후 방어=DB 제약' 2계층 구조로 설계</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">동시 부분 취소 시 두 요청이 같은 refundedAmount를 읽어 원 결제액 초과 취소(오버리펀드) 발생</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> Payment에 @Version을 추가해 두 번째 취소를 저장 시점에 차단, 스레드 타이밍에 의존하지 않는 결정적 테스트로 재현·검증</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project__info-block">
+                <p class="eyebrow">사용 기술 스택</p>
+                <div class="tags">
+                  <span class="tag tag--honey">Java 17</span>
+                  <span class="tag tag--honey">Spring Boot</span>
+                  <span class="tag tag--honey">Spring Data JPA</span>
+                  <span class="tag tag--honey">JPA</span>
+                  <span class="tag tag--honey">MySQL</span>
+                  <span class="tag tag--honey">Gradle</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="card project">
         <h3 class="project__title">🗺️ 한걸음</h3>
         <span class="project-date">
           <span class="date-emoji">📅</span> 2026.06.18 ~ 06.19
@@ -309,7 +412,7 @@
         </div>
       </article>
 
-      <!-- Project 3 -->
+      <!-- Project 4 -->
       <article class="card project">
         <h3 class="project__title">🕹️ Anomaly.exe</h3>
         <span class="project-date">
@@ -403,7 +506,7 @@
         </div>
       </article>
 
-      <!-- Project 4 -->
+      <!-- Project 5 -->
       <article class="card project">
         <h3 class="project__title">🧡 지금 보고 계신 이 포트폴리오</h3>
         <span class="project-date live">
