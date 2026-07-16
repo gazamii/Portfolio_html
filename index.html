@@ -84,9 +84,15 @@
       <p class="eyebrow">TECH STACK</p>
       <h2 class="section__title">이런 도구들과 친해요</h2>
       <div class="chips">
-        <span class="chip chip--coral">🧩 C / C++</span>
+        <span class="chip chip--coral">☕ Java 17</span>
+        <span class="chip chip--honey">🌱 Spring Boot</span>
+        <span class="chip chip--coral">🗄️ Spring Data JPA</span>
+        <span class="chip chip--honey">🐬 MySQL</span>
+        <span class="chip chip--coral">🐳 Docker</span>
+        <span class="chip chip--honey">🟢 Node.js</span>
+        <span class="chip chip--coral">🚂 Express</span>
         <span class="chip chip--honey">🐍 Python</span>
-        <span class="chip chip--coral">☕ Java</span>
+        <span class="chip chip--coral">🧩 C / C++</span>
         <span class="chip chip--honey">🌿 Git</span>
         <span class="chip chip--coral">🧱 Data Structures</span>
       </div>
@@ -279,6 +285,7 @@
                   <li><span class="features__mark">✦</span><p><strong>Append-only 원장 설계</strong> — LedgerEntry는 수정 없이 반대 방향 CREDIT 행을 새로 쌓아, 계좌의 자금 흐름을 시간순 그대로 복원 가능하게 (회계/카드사 원장 원칙)</p></li>
                   <li><span class="features__mark">✦</span><p><strong>전역 예외 처리</strong> — @RestControllerAdvice 한 곳에 에러 정책을 모으고 상태코드를 책임 소재로 분리(404/409/400/500), 스택트레이스는 로그에만 남기고 클라이언트엔 통일된 형식만 응답</p></li>
                   <li><span class="features__mark">✦</span><p><strong>명령·조회 책임 분리</strong> — 쓰기(pay/cancel)와 읽기(QueryService)를 클래스로 분리하고 조회엔 @Transactional(readOnly=true)를 적용해 안전성과 성능 확보</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>실제 MySQL 기반 동시성 검증</strong> — Testcontainers로 MySQL 8.4 컨테이너를 띄워 동일 멱등성 키의 동시 요청을 10·50·100 스레드로 총 960건 재현, 중복 결제 0건 · 잔액 오차 0원 · 원장 정확히 1건을 실측 검증</p></li>
                 </ul>
               </div>
 
@@ -298,6 +305,16 @@
                       <p class="trouble__issue">이슈</p>
                       <p class="trouble__text">동시 부분 취소 시 두 요청이 같은 refundedAmount를 읽어 원 결제액 초과 취소(오버리펀드) 발생</p>
                       <p class="trouble__solve"><strong>해결 →</strong> Payment에 @Version을 추가해 두 번째 취소를 저장 시점에 차단, 스레드 타이밍에 의존하지 않는 결정적 테스트로 재현·검증</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">테스트를 H2 인메모리 DB로만 돌리고 있어, 멱등성의 최후 방어선인 DB unique 제약이 실제 MySQL에서도 동일하게 동작하는지 검증되지 않음</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> Testcontainers로 실제 MySQL 8.4 컨테이너를 띄워 테스트 전환. 이 과정에서 시드 데이터의 H2 전용 함수(DATEADD) 의존이 드러나, 테스트가 인메모리 DB에 종속돼 있었음을 확인하고 제거</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">동시 요청을 10 → 100으로 늘려도 충돌 실패가 항상 정확히 9건으로 고정</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> HikariCP 커넥션 풀 크기(기본 10)가 동시 트랜잭션 수를 제한해 실제 경합 창이 풀 크기로 결정됨을 규명. 나머지 요청은 대기 중 승자가 커밋을 마쳐 1차 방어(선조회)에 걸려 재생 응답을 받는 구조임을 실측으로 확인</p>
                     </div>
                   </div>
                 </div>
