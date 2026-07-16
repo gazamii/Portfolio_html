@@ -354,6 +354,7 @@
           <span class="tag tag--honey">Leaflet</span>
           <span class="tag tag--honey">React</span>
           <span class="tag tag--honey">Web Speech API</span>
+          <span class="tag tag--honey">Node.js Test Runner</span>
         </div>
 
         <div class="project__actions">
@@ -406,8 +407,13 @@
                   <div class="accordion__inner">
                     <div class="trouble">
                       <p class="trouble__issue">이슈</p>
-                      <p class="trouble__text">(작성 예정) 실제로 겪었던 이슈를 여기에 채워주세요</p>
-                      <p class="trouble__solve"><strong>해결 →</strong> (작성 예정) 실제 해결 과정을 여기에 채워주세요</p>
+                      <p class="trouble__text">해커톤 종료 후 코드를 재검증하던 중, 12km 경로에서 최대 경사 283%가 검출됨. 원인은 분모가 아니라 분자였음 — 거리 0 구간은 방어했지만, ORS 고도 원천인 SRTM(90m 격자)이 한강변에서 6.7m 구간에 19m의 고도 점프를 반환했고, 이 노이즈 구간이 ×4.0 위험 가중치를 받아 경로 비용이 오염되며 추천 결과 자체가 뒤집힘</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 세계 최급경사 도로(34.8%)를 근거로 40% 초과를 데이터 오류로 처리하고, 격자 크기의 절반인 ±45m 삼각 가중 평균으로 고도를 스무딩. 최대 경사 283.1% → 30.5%, 정상 경로는 7.4%로 변화 없음을 실측 검증(재현 테스트 9종 추가)</p>
+                    </div>
+                    <div class="trouble">
+                      <p class="trouble__issue">이슈</p>
+                      <p class="trouble__text">도착 판정을 '현재 위치에서 가장 가까운 경로 구간'으로 계산했는데, 경사 회피 우회 경로는 왔던 길 근처로 되돌아오는 구간이 많아 출발 지점이 복귀 구간에 오매칭됨 — 핵심 기능(우회)이 핵심 판정(도착)을 깨뜨리는 구조로, 남은 거리 451m가 14m로 계산되어 걷기 시작하자마자 "도착했습니다" 음성이 나감</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 직전 매칭 구간 기준 전방 60m 윈도우로 진행 순서를 강제, 단 이탈 시 영영 복구 불가한 부작용을 막기 위해 35m 초과 이탈 시 전체 재탐색으로 리셋. 451.5m 정상 반환 확인. 첫 구현(구간 개수 기준 윈도우)이 재현 테스트에 걸려 거리 기준으로 재설계한 과정에서, 테스트를 먼저 만든 것이 실제로 작동함</p>
                     </div>
                   </div>
                 </div>
@@ -422,6 +428,7 @@
                   <span class="tag tag--honey">Leaflet</span>
                   <span class="tag tag--honey">React</span>
                   <span class="tag tag--honey">Web Speech API</span>
+                  <span class="tag tag--honey">Node.js Test Runner</span>
                 </div>
               </div>
             </div>
