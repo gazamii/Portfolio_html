@@ -129,8 +129,8 @@
       <!-- Project 1 -->
       <article class="card project">
         <h3 class="project__title">🍀 노노링크 (Nono Link)</h3>
-        <span class="project-date live">
-          <span class="live-dot"></span> 2026.05.22 ~ 진행 중
+        <span class="project-date">
+          <span class="date-emoji">📅</span> 2026.05.22 ~ 07.08
         </span>
         <p class="project__desc">
           어르신이 손글씨로 작성한 재능 신청서를 OCR·AI로 구조화해 QR 명함으로 만들고, 노(老)-노(老) 이웃을 안전하게 연결하는
@@ -138,9 +138,11 @@
         </p>
         <span class="project-people"><span class="people-emoji">👥</span> 5인 팀 프로젝트</span>
         <div class="tags">
+          <span class="tag tag--honey">Flutter</span>
+          <span class="tag tag--honey">Dart</span>
           <span class="tag tag--honey">Node.js</span>
-          <span class="tag tag--honey">MySQL</span>
           <span class="tag tag--honey">Express</span>
+          <span class="tag tag--honey">MySQL</span>
           <span class="tag tag--honey">REST API</span>
         </div>
 
@@ -172,18 +174,19 @@
                   과학기술정보통신부 주최 '2026 글로벌 피우다프로젝트(한·일 노인돌봄 ICT 솔루션)'에서 개발한, 어르신끼리
                   재능을 나누는 노(老)-노(老) 연결 서비스입니다. 어르신이 종이에 손글씨로 적은 재능 신청서를 OCR·AI로
                   구조화해 QR 명함으로 만들고, 이웃이 QR을 스캔하면 개인 연락처 노출 없이 안심 매칭으로 이어집니다.
-                  저는 백엔드에서 이 서비스의 핵심인 '안심 매칭 시스템'을 맡아, 어르신 간 신뢰를 기반으로 한 매칭
-                  알고리즘과 관련 API 전반을 설계·구현했습니다. 예선 서면 평가를 통과해 본선에 진출한 프로젝트입니다.
+                  저는 매칭 기능의 추천 API(후보 검색 SQL·리뷰 평판 집계 조인·응답 설계)를 백엔드에서, 매칭 신청부터
+                  재제안까지의 화면 흐름을 프론트엔드에서 구현했으며, 한·일 서비스를 위한 다국어화를 담당했습니다.
+                  예선 서면 평가를 통과해 본선에 진출했으며, 본선 발표를 끝으로 2026년 7월 프로젝트를 마무리했습니다.
                 </p>
               </div>
 
               <div class="project__info-block">
                 <p class="eyebrow">핵심 기능 &amp; 로직</p>
                 <ul class="features">
-                  <li><span class="features__mark">✦</span><p><strong>다중 요소 가중치 매칭 알고리즘</strong> — 단순 거리 기반 매칭을 넘어, 주변 사용자와의 거리·평점·이용 후기 등 여러 요소에 가중치를 부여하고 조정해 실제 상황에 맞는 신뢰 기반 매칭 결과 도출</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>MVC 구조의 매칭 모듈 설계</strong> — matchModel / matchService / matchController / matchRoutes로 계층을 분리해 매칭 기능 전반을 유지보수 가능한 구조로 구현</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>백엔드 정합성 고려한 API 설계</strong> — 매칭 API가 회원·명함 등 다른 기능과 병목 없이 연동되도록 데이터 흐름과 백엔드 구조 간 정합성 확보</p></li>
-                  <li><span class="features__mark">✦</span><p><strong>확장 고려한 데이터 구조</strong> — 매칭 이후 실제 만남까지 이어지는 스케줄링 로직으로 자연스럽게 넘어갈 수 있도록 데이터 구조 설계</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>평판 기반 추천 API</strong> — 활동지역 필터에 리뷰 평점 평균을 조인해 정렬하는 단일 쿼리로 후보를 반환, 가중치 튜닝 대신 데이터가 없는 초기 서비스에 맞는 규칙 기반 설계 선택</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>매칭 플로우 프론트 구현</strong> — 신청·대기·재제안·채팅 화면과 상태 저장소(matching_store)를 Flutter로 구현, 백엔드 상태 전이 API를 화면 흐름으로 연결</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>한·일 다국어화</strong> — easy_localization 기반 ko/ja 리소스 분리 및 전 화면 키 치환으로, 한일 공동 서비스라는 프로젝트 전제를 코드 레벨에서 충족</p></li>
+                  <li><span class="features__mark">✦</span><p><strong>식별코드 인증·재능카드 화면</strong> — 어르신 대상 서비스 특성을 고려한 단순 입력 흐름 설계</p></li>
                 </ul>
               </div>
 
@@ -196,13 +199,8 @@
                   <div class="accordion__inner">
                     <div class="trouble">
                       <p class="trouble__issue">이슈</p>
-                      <p class="trouble__text">거리만 가까우면 매칭 순위가 높아져, 신뢰도 낮은 상대가 먼저 노출됨</p>
-                      <p class="trouble__solve"><strong>해결 →</strong> 평점·후기 데이터를 함께 가중치로 반영해 우선순위를 재조정, 신뢰할 수 있는 이웃이 먼저 연결되도록 로직 개선</p>
-                    </div>
-                    <div class="trouble">
-                      <p class="trouble__issue">이슈</p>
-                      <p class="trouble__text">어르신 간 매칭이라는 특성상 민감 정보(연락처·QR 식별자)가 노출될 위험</p>
-                      <p class="trouble__solve"><strong>해결 →</strong> 후기 평점 기반 노출 우선순위는 살리되, 개인 식별 정보는 화면에 드러나지 않도록 매칭 흐름을 제안-수락-완료 버튼식으로 설계</p>
+                      <p class="trouble__text">추천 정렬을 리뷰 평점 평균으로 설계했는데, 리뷰가 없는 신규 사용자는 평점이 0으로 계산되어 항상 최하위로 밀림. 어르신 간 재능 나눔이라는 서비스 특성상 신규 유입이 영영 노출되지 않는 콜드스타트 문제</p>
+                      <p class="trouble__solve"><strong>해결 →</strong> 공모전 일정상 미해결. 현재는 한계를 인지한 상태이며, 리뷰 없는 사용자를 최하위가 아닌 중앙값으로 두거나 신규 노출 쿼터를 별도 배정하는 방향으로 접근할 것</p>
                     </div>
                   </div>
                 </div>
@@ -211,9 +209,11 @@
               <div class="project__info-block">
                 <p class="eyebrow">사용 기술 스택</p>
                 <div class="tags">
+                  <span class="tag tag--honey">Flutter</span>
+                  <span class="tag tag--honey">Dart</span>
                   <span class="tag tag--honey">Node.js</span>
-                  <span class="tag tag--honey">MySQL</span>
                   <span class="tag tag--honey">Express</span>
+                  <span class="tag tag--honey">MySQL</span>
                   <span class="tag tag--honey">REST API</span>
                 </div>
               </div>
